@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <style>
+        /* Style the container for the login button and dropdown */
+        .login-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Style the dropdown content (initially hidden) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 150px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            right: 0;
+        }
+
+        /* Style the links inside the dropdown */
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Change link color on hover */
+        .dropdown-content a:hover {
+            background-color: #555;
+        }
+
+        /* Show the dropdown content on hover */
+        .login-container:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with toggle button -->
+    <div class="header">
+        <button class="toggle-btn" id="toggle-btn" onclick="toggleSidebar()">☰</button>
+        <h1>ONLINE QUIZ</h1>
+
+        <!-- Login button with dropdown -->
+        <div class="login-container">
+            <button class="logout-btn">Login</button>
+            <div class="dropdown-content">
+                <a href="login.php">Login</a>
+                <a href="register.php">Register</a>
+                <a href="help.php">Help</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="admin-section">
+            <img src="./student.png" alt="Admin" class="admin-img" style="margin-top: 2rem;">
+            <h1 id="welcome-message">Welcome User!</h1>
+        </div>
+        <ul class="sidebar-elements">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Teacher</a></li>
+            <li><a href="#">Student</a></li>
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">Questions</a></li>
+        </ul>
+    </div>
+
+    <!-- Main content -->
+    <div class="main-content" id="main-content">
+        <h2 class="head">Welcome to the Online Quiz Dashboard</h2>
+        <p></p>
+    </div>
+ 
+    <!-- Cards -->
+    <div class="card1-container">
+        <div class="card1" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        <div class="card2" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <footer style="display: flex; justify-content: center;">
+        <div class="footer">
+            <p>&copy; 2024 Your Website Name. All rights reserved.</p>
+            <p>
+                <a href="privacy-policy.html">Privacy Policy</a> | 
+                <a href="terms-of-service.html">Terms of Service</a> | 
+                <a href="contact.html">Contact Us</a>
+            </p>
+        </div>
+    </footer>
+    <script>
+         fetch('get_user_name.php')
+            .then(response => response.json())
+            .then(data => {
+                const userOptions = document.getElementById('user-options');
+
+                // If the user is logged in
+                if (data.name) {
+                    document.getElementById('welcome-message').innerText = `Welcome, ${data.name}!`;
+
+                    // Show Username and Logout options
+                    userOptions.innerHTML = `
+                        <a href="#">${data.name}</a>
+                        <a href="logout.php">Logout</a>
+                    `;
+                } else {
+                    // If not logged in, show Username placeholder and Login option
+                    userOptions.innerHTML = `
+                        <a href="#">USER</a>
+                        <a href="index.php">Login</a>
+                    `;
+                }
+            })
+            .catch(error => console.log('Error:', error));
+    </script>
+</body>
+</html>
